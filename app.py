@@ -1,6 +1,7 @@
-from src.langgraphagenticai.main import load_langgraphagenticai_app
+from src.langgraphagenticai.main import load_langgraph_agenticai_app
+
 
 
 if __name__ == "__main__":
-    load_langgraphagenticai_app()
+    load_langgraph_agenticai_app()
 

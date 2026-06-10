@@ -1,8 +1,7 @@
-from langgraph import StateGraph
+from langgraph.graph import StateGraph
 from src.langgraphagenticai.state.state import State
-from langgraph.graph import StateGraph, START, END 
+from langgraph.graph import START,END
 from src.langgraphagenticai.nodes.basic_chatbot_node import BasicChatbotNode
-
 
 class GraphBuilder:
     """
@@ -28,7 +27,21 @@ class GraphBuilder:
         basic_chatbot_node=BasicChatbotNode(self.llm)
 
 
-        self.graph_builder.add_node("chatbot_node", basic_chatbot_node.process)
-        self.graph_builder.add_edge("START", "chatbot_node")
-        self.graph_builder.add_edge("chatbot_node", "END")
+        self.graph_builder.add_node("chatbot", basic_chatbot_node.process)
+        self.graph_builder.add_edge(START, "chatbot")
+        self.graph_builder.add_edge("chatbot", END)
+
+    def setup_graph(self, usecase:str):
+        """
+        Setup the graph based on the selected use case.
+        This method determines which graph structure to build based on the user's selection of use case.
+        It calls the appropriate graph building method to construct the graph for the selected use case.
+
+        Args:
+            usecase (str): The selected use case for which to build the graph.
+        """
+        if usecase == "Basic Chatbot":
+            self.basic_chatbot_build_graph()
+
+            return self.graph_builder.compile()
         
