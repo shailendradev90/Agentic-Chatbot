@@ -1,5 +1,5 @@
 import streamlit as st
-
+import os 
 from src.langgraphagenticai.ui.uiconfigfile import Config
 
 
@@ -39,5 +39,15 @@ class LoadStreamlitUI:
             self.user_controls["selected_usecase"] = st.selectbox(
                 "Select Usecase", usecase_options
             )
+
+            if  self.user_controls["selected_usecase"] == "Chatbot With Web":
+                os.environ["TAVILY_API_KEY"]=self.user_controls["TAVILY_API_KEY"] = st.session_state["TAVILY_API_KEY"] = self.user_controls["TAVILY_API_KEY"] = st.text_input(
+                    "Enter Tavily API Key for Web Search", type="password"
+                 )
+                # validate API key
+                if self.user_controls["TAVILY_API_KEY"]:
+                    st.success("Tavily API Key entered successfully!")
+                else:
+                    st.warning("Please enter your Tavily API Key to use the Chatbot With Web usecase.")                
 
         return self.user_controls
